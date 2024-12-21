@@ -34,7 +34,6 @@ public class TileBag {
     public TileBag() {
         tiles = new ArrayList<Tile>();
         readTiles();
-        tiles.forEach(tile -> System.out.println(tile.getLetter() + " - " + tile.getPoints()));
         bagSize = tiles.size();
     }
 

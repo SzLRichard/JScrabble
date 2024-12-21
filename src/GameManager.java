@@ -5,13 +5,12 @@ public class GameManager {
     private PlayingField playingField;
     private List<Player> playerList;
     private TileBag tileBag;
-    public GameManager() {
+    public GameManager(PlayingField playingField) {
+        this.playingField = playingField;
         playerList = new ArrayList<Player>();
         tileBag = new TileBag();
         for(Player player: playerList) {
             player.setTileList(tileBag.replenishTiles(7));
         }
-        playingField=new PlayingField(playerList);
-
     }
 }

@@ -7,6 +7,7 @@ public class Application extends JFrame {
     private JPanel mainPanel;
     private List<Player> players;
     private CardLayout cardLayout;
+    private PlayingField playingField;
     public Application() {
         setTitle("Scrabble Game");
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -17,7 +18,8 @@ public class Application extends JFrame {
         mainPanel = new JPanel(cardLayout);
         players = new ArrayList<>();
         mainPanel.add(new MenuPanel(this), "Menu");
-        mainPanel.add(new PlayingField(this.players), "Game");
+        playingField=new PlayingField(this.players);
+        mainPanel.add(playingField, "Game");
 
         add(mainPanel);
         cardLayout.show(mainPanel, "Menu");
@@ -41,6 +43,8 @@ public class Application extends JFrame {
 
     public void switchToGame() {
         cardLayout.show(mainPanel, "Game");
+        new GameManager(playingField);
     }
+
 
 }
