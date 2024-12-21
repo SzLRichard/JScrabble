@@ -17,5 +17,11 @@ public class Player {
     public void setScore(int score) {
         this.score = score;
     }
+    public void setTileList(List<Tile> tileList) {
+        this.tileList = tileList;
+    }
+    public List<Tile> getTileList() {
+        return tileList;
+    }
 
 }
