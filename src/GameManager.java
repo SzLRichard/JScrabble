@@ -186,6 +186,7 @@ public class GameManager {
         playingField.repaint();
         System.out.println("Repainted the playing field");
         placeSFX.start();
+        playingField.resetTimer();
     }
 
     public void roundEnd() {
@@ -215,6 +216,21 @@ public class GameManager {
             currentPlayer.setTileList(currentTiles);
             loadNextRound();
         }
+    }
+
+    public void forceRoundEnd(){
+        for(int i=0;i<15;i++){
+            for(int j=0;j<15;j++){
+                if(!gameBoard.checkIfTaken(i, j) && gameBoard.getTile(i, j) != null){
+                    Tile removedTile=gameBoard.getTile(i,j);
+                    gameBoard.getTileSpace(i,j).setTile(null);
+                    gameBoard.getTileSpace(i,j).repaint();
+                    playingField.getHandPanel().addTile(removedTile);
+                    playingField.getHandPanel().repaint();
+                }
+            }
+        }
+        loadNextRound();
     }
 
     private void gameEnd() {
