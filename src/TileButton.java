@@ -16,8 +16,6 @@ public class TileButton extends JButton {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-
-        // Draw the score in the bottom right corner
         g.setFont(new Font("Arial", Font.PLAIN, 12));
         g.setColor(Color.BLACK);
         String score = String.valueOf(tile.getPoints());

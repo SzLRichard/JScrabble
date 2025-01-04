@@ -11,4 +11,7 @@ public class Tile {
     public int getPoints() {
         return points;
     }
+    public void setLetter(char letter) {
+        this.letter = letter;
+    }
 }

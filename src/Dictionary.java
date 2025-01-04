@@ -13,6 +13,7 @@ public class Dictionary {
     public boolean contains(String word) {
         return dictionary.contains(word);
     }
+
     public void readWords() {
         try (BufferedReader reader = new BufferedReader(new FileReader("resources/wordlist.txt"))) {
             String line;
@@ -23,4 +24,5 @@ public class Dictionary {
             System.err.println("Error reading the file: " + e.getMessage());
         }
     }
+
 }

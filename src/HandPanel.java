@@ -22,6 +22,23 @@ public class HandPanel extends JPanel {
         }
     }
 
+    private char getWildcardLetter() {
+        String input = JOptionPane.showInputDialog(null,
+                "Enter the letter for the wildcard tile:",
+                "Set Wildcard Letter",
+                JOptionPane.PLAIN_MESSAGE);
+
+        if (input != null && input.length() == 1 && Character.isLetter(input.charAt(0))) {
+            return Character.toUpperCase(input.charAt(0)); // Return as uppercase
+        } else {
+            JOptionPane.showMessageDialog(null,
+                    "Invalid input. Please enter a single letter.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return getWildcardLetter();
+        }
+    }
+
     private TileButton createTileButton(Tile tile) {
         TileButton button = new TileButton(tile);
         button.setPreferredSize(new Dimension(50, 50));
@@ -29,21 +46,22 @@ public class HandPanel extends JPanel {
         button.setBackground(Color.WHITE);
         button.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
-        button.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                if(swapMode){
-                    swappedTiles.add(tile);
-                    hand.remove(tile);
-                    selectedTile = null;
+        button.addActionListener(e->{
+            if (swapMode) {
+                swappedTiles.add(tile);
+                hand.remove(tile);
+                selectedTile = null;
+                refreshHand();
+            } else {
+                selectedTile = tile;
+                if (tile.getLetter() == '_') {
+                    char newLetter = getWildcardLetter();
+                    tile.setLetter(newLetter);
                     refreshHand();
                 }
-                else{
-                selectedTile = tile;
-                }
-
             }
         });
+
         if (tile == selectedTile) {
             button.setBackground(Color.YELLOW);
         }
@@ -72,8 +90,8 @@ public class HandPanel extends JPanel {
         repaint();
     }
 
-    public void setHand(List<Tile> newHand){
-        this.hand=newHand;
+    public void setHand(List<Tile> newHand) {
+        this.hand = newHand;
         refreshHand();
     }
 
@@ -82,18 +100,19 @@ public class HandPanel extends JPanel {
         refreshHand();
     }
 
-    public void setSwapMode(boolean newMode){
-        swapMode=newMode;
+    public void setSwapMode(boolean newMode) {
+        swapMode = newMode;
     }
 
-    public boolean checkIfSwap(){
+    public boolean checkIfSwap() {
         return swapMode;
     }
 
-    public List<Tile> getSwappedTiles(){
+    public List<Tile> getSwappedTiles() {
         return swappedTiles;
     }
-    public void clearSwappedTiles(){
+
+    public void clearSwappedTiles() {
         swappedTiles.clear();
     }
 

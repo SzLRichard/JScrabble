@@ -3,13 +3,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.awt.*;
 
-class MenuPanel extends JPanel {
+class PlayerSelect extends JPanel {
     private JTextField player1Field;
     private JTextField player2Field;
     private JTextField player3Field;
     private JTextField player4Field;
 
-    public MenuPanel(Application game) {
+    public PlayerSelect(Application game) {
         setLayout(new GridLayout(6, 1, 10, 10));
 
         add(new JLabel("Enter Player Names:", SwingConstants.CENTER));

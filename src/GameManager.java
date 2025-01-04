@@ -261,6 +261,7 @@ public class GameManager {
         }
     }
 
+
     public void setPlayingField(PlayingField pf) {
         this.playingField = pf;
         this.gameBoard = this.playingField.getGameBoard();

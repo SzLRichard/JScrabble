@@ -35,47 +35,33 @@ public class PlayingField extends JPanel {
         handPanel = new HandPanel(players.getFirst().getTileList());
         gameBoard = new GameBoard(handPanel);
         JPanel leftSide=new JPanel(new GridLayout(3,1));
+        JPanel timerPanel=new JPanel(new FlowLayout());
         timerLabel=new JLabel();
+        timerPanel.add(timerLabel);
         swapTiles=new JButton("Swap tiles");
-        swapTiles.addMouseListener(
-                new MouseAdapter() {
-                    @Override
-                    public void mouseClicked(MouseEvent e) {
-                        super.mouseClicked(e);
-                        System.out.println("The swap button was clicked");
-                        gameManager.setSwapMode();
-                    }
-                }
-        );
-        finalize = new JButton("Finalize");
-        finalize.addMouseListener(
-                new MouseAdapter() {
-                    @Override
-                    public void mouseClicked(MouseEvent e) {
-                        super.mouseClicked(e);
-                        System.out.println("The finalize button was clicked");
-                        gameManager.roundEnd();
-                    }
-                }
-        );
-        timeRemaining=startingTime;
-        timer=new Timer(1000, new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if(timeRemaining>0){
-                    timeRemaining--;
-                    timerLabel.setText(String.format("%02d:%02d", timeRemaining/60,timeRemaining%60));
-                }
-                else{
-                    gameManager.forceRoundEnd();
-                    timeRemaining=startingTime;
-                }
-
-            }
+        swapTiles.addActionListener(e->{
+            gameManager.setSwapMode();
         });
 
-        leftSide.add(timerLabel);
+        finalize = new JButton("Finalize");
+        finalize.addActionListener(e->{
+            gameManager.roundEnd();
+        });
+
+        timeRemaining=startingTime;
+        timer=new Timer(1000, e -> {
+            if(timeRemaining>0){
+                timeRemaining--;
+                timerLabel.setText(String.format("%02d:%02d", timeRemaining/60,timeRemaining%60));
+            }
+            else{
+                gameManager.forceRoundEnd();
+                timeRemaining=startingTime;
+            }
+
+        });
+
+        leftSide.add(timerPanel);
         leftSide.add(swapTiles);
         leftSide.add(finalize);
 
@@ -101,7 +87,6 @@ public class PlayingField extends JPanel {
 
     public void loadEndScreen(Player winner){
         game.loadEndScreen(winner);
-
     }
 
     @Override
