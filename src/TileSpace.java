@@ -7,8 +7,9 @@ public class TileSpace extends JPanel {
     private Tile tile;
     private boolean taken = false;
     private String multiplier = "";
-    private HandPanel hand;
-    private int x,y;
+    private final HandPanel hand;
+    private final int x;
+    private final int y;
 
     private void handleClick() {
         if (!taken && tile != null) {
@@ -71,11 +72,6 @@ public class TileSpace extends JPanel {
     public int getYpos(){
         return y;
     }
-    private void drawTile(Graphics g,Color c){
-
-
-    }
-
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);

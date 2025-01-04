@@ -10,9 +10,9 @@ import static java.lang.Math.max;
 
 public class GameManager {
     private PlayingField playingField;
-    private List<Player> playerList;
-    private TileBag tileBag;
-    private Dictionary dictionary;
+    private final List<Player> playerList;
+    private final TileBag tileBag;
+    private final Dictionary dictionary;
     private GameBoard gameBoard;
     private Player currentPlayer;
     private int playerIndex;
@@ -20,26 +20,27 @@ public class GameManager {
 
     private boolean validWords() {
         boolean allValid = true;
-        String word = "", word2 = "";
+        StringBuilder word = new StringBuilder();
+        StringBuilder word2 = new StringBuilder();
         for (int i = 0; i < 15; i++) {
-            word = "";
-            word2 = "";
+            word = new StringBuilder();
+            word2 = new StringBuilder();
             for (int j = 0; j < 15; j++) {
                 try {
-                    word += gameBoard.getTile(i, j).getLetter();
+                    word.append(gameBoard.getTile(i, j).getLetter());
                 } catch (NullPointerException e) {
-                    if (word.length() > 1 && !dictionary.contains(word)) {
+                    if (word.length() > 1 && !dictionary.contains(word.toString())) {
                         return false;
                     }
-                    word = "";
+                    word = new StringBuilder();
                 }
                 try {
-                    word2 += gameBoard.getTile(j, i).getLetter();
+                    word2.append(gameBoard.getTile(j, i).getLetter());
                 } catch (NullPointerException e) {
-                    if (word2.length() > 1 && !dictionary.contains(word2)) {
+                    if (word2.length() > 1 && !dictionary.contains(word2.toString())) {
                         return false;
                     }
-                    word2 = "";
+                    word2 = new StringBuilder();
                 }
             }
         }
@@ -58,7 +59,7 @@ public class GameManager {
 
     private int calculateScore() {
         int score = 0;
-        StringBuilder word = new StringBuilder();
+        StringBuilder word;
         int wordScore = 0;
         int wordMultiplier = 0;
         for (int i = 0; i < 15; i++) {
@@ -260,7 +261,6 @@ public class GameManager {
             System.out.println("Could not open placing sfx");
         }
     }
-
 
     public void setPlayingField(PlayingField pf) {
         this.playingField = pf;

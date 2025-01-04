@@ -3,7 +3,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
-import java.util.Random;
 
 public class Logo extends JPanel {
     private Image img;

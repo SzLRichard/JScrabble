@@ -4,10 +4,10 @@ import java.util.List;
 import java.awt.*;
 
 class PlayerSelect extends JPanel {
-    private JTextField player1Field;
-    private JTextField player2Field;
-    private JTextField player3Field;
-    private JTextField player4Field;
+    private final JTextField player1Field;
+    private final JTextField player2Field;
+    private final JTextField player3Field;
+    private final JTextField player4Field;
 
     public PlayerSelect(Application game) {
         setLayout(new GridLayout(6, 1, 10, 10));

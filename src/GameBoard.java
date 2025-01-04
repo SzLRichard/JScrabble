@@ -2,11 +2,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.BufferedReader;
 import java.io.FileReader;
-import java.util.Arrays;
 
 public class GameBoard extends JPanel {
-    private TileSpace[][] tileBoard;
-    private HandPanel handPanel;
+    private final TileSpace[][] tileBoard;
 
     private boolean removeTile() {
         return false;
@@ -31,7 +29,6 @@ public class GameBoard extends JPanel {
     }
 
     public GameBoard(HandPanel handPanel) {
-        this.handPanel = handPanel;
         tileBoard = new TileSpace[15][15];
         setLayout(new GridLayout(15, 15));
         for (int i = 0; i < 15; i++) {

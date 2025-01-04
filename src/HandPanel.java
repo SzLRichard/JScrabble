@@ -1,7 +1,5 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,7 +7,7 @@ public class HandPanel extends JPanel {
     private List<Tile> hand;
     private Tile selectedTile;
     private boolean swapMode = false;
-    List<Tile> swappedTiles = new ArrayList<>();
+    private final List<Tile> swappedTiles = new ArrayList<>();
 
     public HandPanel(List<Tile> tiles) {
         this.hand = new ArrayList<>(tiles);

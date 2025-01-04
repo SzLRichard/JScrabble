@@ -1,24 +1,16 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.util.List;
 
 public class PlayingField extends JPanel {
-    private GameManager gameManager;
-    private GameBoard gameBoard;
-    private ScorePanel scoreBoard;
-    private HandPanel handPanel;
-    private List<Player> players;
-    private JButton finalize;
-    private JButton swapTiles;
+    private final GameManager gameManager;
+    private final GameBoard gameBoard;
+    private final ScorePanel scoreBoard;
+    private final HandPanel handPanel;
     private Player currentPlayer;
-    private Application game;
-    private Timer timer;
-    private int startingTime=5*60;
-    private JLabel timerLabel;
+    private final Application game;
+    private final int startingTime=5*60;
+    private final JLabel timerLabel;
     private int timeRemaining;
 
     private void roundEnd(){
@@ -29,7 +21,7 @@ public class PlayingField extends JPanel {
         setLayout(new BorderLayout());
         this.game=app;
         this.gameManager=gm;
-        this.players=gameManager.getPlayers();
+        List<Player> players = gameManager.getPlayers();
         this.currentPlayer=gameManager.getCurrentPlayer();
         scoreBoard = new ScorePanel(players);
         handPanel = new HandPanel(players.getFirst().getTileList());
@@ -38,25 +30,24 @@ public class PlayingField extends JPanel {
         JPanel timerPanel=new JPanel(new FlowLayout());
         timerLabel=new JLabel();
         timerPanel.add(timerLabel);
-        swapTiles=new JButton("Swap tiles");
+        JButton swapTiles = new JButton("Swap tiles");
         swapTiles.addActionListener(e->{
             gameManager.setSwapMode();
         });
 
-        finalize = new JButton("Finalize");
+        JButton finalize = new JButton("Finalize");
         finalize.addActionListener(e->{
             gameManager.roundEnd();
         });
 
         timeRemaining=startingTime;
-        timer=new Timer(1000, e -> {
-            if(timeRemaining>0){
+        Timer timer = new Timer(1000, e -> {
+            if (timeRemaining > 0) {
                 timeRemaining--;
-                timerLabel.setText(String.format("%02d:%02d", timeRemaining/60,timeRemaining%60));
-            }
-            else{
+                timerLabel.setText(String.format("%02d:%02d", timeRemaining / 60, timeRemaining % 60));
+            } else {
                 gameManager.forceRoundEnd();
-                timeRemaining=startingTime;
+                timeRemaining = startingTime;
             }
 
         });

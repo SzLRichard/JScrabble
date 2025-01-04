@@ -7,14 +7,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Application extends JFrame {
-    private JPanel mainPanel;
-    private PlayerSelect playerSelectPanel;
-    private HelpMenu helpMenu;
-    private DictionaryManager dictionaryManager;
-    private List<Player> players;
-    private CardLayout cardLayout;
+    private final JPanel mainPanel;
+    private final List<Player> players;
+    private final CardLayout cardLayout;
     private PlayingField playingField;
-    private GameManager gameManager;
     private Clip bgm;
     public Application() {
 
@@ -27,10 +23,10 @@ public class Application extends JFrame {
         mainPanel = new JPanel(cardLayout);
         players = new ArrayList<>();
 
-        helpMenu=new HelpMenu(this);
+        HelpMenu helpMenu = new HelpMenu(this);
         mainPanel.add(helpMenu, "helpMenu");
 
-        dictionaryManager=new DictionaryManager(this);
+        DictionaryManager dictionaryManager = new DictionaryManager(this);
         mainPanel.add(dictionaryManager, "Dictionary");
 
         mainPanel.add(new MainMenu(this), "Menu");
@@ -68,7 +64,7 @@ public class Application extends JFrame {
     }
 
     public void playerSelect(){
-     playerSelectPanel=new PlayerSelect(this);
+        PlayerSelect playerSelectPanel = new PlayerSelect(this);
      mainPanel.add(playerSelectPanel, "PlayerSelect");
      cardLayout.show(mainPanel, "PlayerSelect");
     }
@@ -83,7 +79,7 @@ public class Application extends JFrame {
         catch (UnsupportedAudioFileException | LineUnavailableException | IOException e){
             System.out.println("Could not open bgm");
         }
-        gameManager = new GameManager(playingField,players);
+        GameManager gameManager = new GameManager(playingField, players);
         playingField=new PlayingField(gameManager,this);
         gameManager.setPlayingField(playingField);
         mainPanel.add(playingField, "Game");

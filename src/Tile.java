@@ -1,6 +1,6 @@
 public class Tile {
     private char letter;
-    private int points;
+    private final int points;
     public Tile(char letter, int points) {
         this.letter = letter;
         this.points = points;

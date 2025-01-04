@@ -8,7 +8,7 @@ import java.util.Random;
 import static java.lang.Long.min;
 
 public class TileBag {
-    private List<Tile> tiles;
+    private final List<Tile> tiles;
 
     private void readTiles() {
         try (BufferedReader reader = new BufferedReader(new FileReader("resources/tileSet.txt"))) {

@@ -5,10 +5,7 @@ import java.awt.event.MouseEvent;
 
 public class HelpMenu extends JPanel {
 
-    private Application app;
-    private JButton backButton;
     public HelpMenu(Application app) {
-        this.app = app;
 
         setLayout(new BorderLayout());
         setPreferredSize(new Dimension(400, 600));
@@ -59,7 +56,7 @@ public class HelpMenu extends JPanel {
         scrollPane.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         add(scrollPane, BorderLayout.CENTER);
 
-        backButton=new JButton("Back");
+        JButton backButton = new JButton("Back");
         backButton.addActionListener(e->app.mainMenu());
         add(backButton,BorderLayout.SOUTH);
     }
