@@ -19,14 +19,15 @@ public class HelpMenu extends JPanel {
             Scrabble Rules:
             
             1. Objective:
-               - Form valid words using letter tiles on the game board.
+               - Form valid words using letter tiles on the bottom.
                - Earn points based on the letters used and board multipliers.
             
             2. Gameplay:
                - Each player starts with 7 random tiles.
                - Place tiles on the board to form words horizontally or vertically.
+               - The first word must go over the middle tile.
                - Words must connect to existing words on the board.
-               - You can swap tiles or skip your turn instead of playing.
+               - You can swap 0 or more tiles instead of playing.
             
             3. Scoring:
                - Each letter has a point value.
@@ -37,12 +38,13 @@ public class HelpMenu extends JPanel {
                    * TW: Triple Word Score
             
             4. Endgame:
-               - The game ends when there are no more tiles in the tile bag.
+               - The game ends one full cycle after the tile bag gets empty.
                - The player with the highest score wins!
             
             Tips:
                - Plan your moves to maximize points.
-               - Use high-value letters on premium spaces.
+               - Take advantage of the multipliers.
+               - Keep an eye on your time in the top left corner.
             """);
         helpText.setFont(new Font("Arial", Font.PLAIN, 14));
         helpText.setEditable(false);

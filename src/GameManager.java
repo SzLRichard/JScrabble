@@ -17,6 +17,7 @@ public class GameManager {
     private Player currentPlayer;
     private int playerIndex;
     private Clip placeSFX;
+    private int emptyBagRounds;
 
     private boolean validWords() {
         StringBuilder word;
@@ -171,9 +172,12 @@ public class GameManager {
     }
 
     public void loadNextRound(){
-        if (tileBag.getSize() == 0) {
+        if(emptyBagRounds==4){
             gameEnd();
             return;
+        }
+        if (tileBag.getSize() == 0) {
+            emptyBagRounds++;
         }
         playerIndex += 1;
         if (playerIndex < playerList.size()) {
@@ -244,6 +248,7 @@ public class GameManager {
     }
 
     public GameManager(List<Player> playerList) {
+        emptyBagRounds=0;
         this.playerList = playerList;
         this.dictionary = new Dictionary();
         tileBag = new TileBag();
