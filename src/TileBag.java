@@ -51,7 +51,7 @@ public class TileBag {
         int n=toSwap.size();
         if(n>tiles.size()){
             System.out.println("Not enough tiles in the bag");
-            return null;
+            return toSwap;
         }
         else {
             List<Tile> newTiles = replenishTiles(n);

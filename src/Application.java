@@ -10,8 +10,8 @@ public class Application extends JFrame {
     private final JPanel mainPanel;
     private final List<Player> players;
     private final CardLayout cardLayout;
-    private PlayingField playingField;
     private Clip bgm;
+
     public Application() {
 
         setTitle("JScrabble");
@@ -38,57 +38,53 @@ public class Application extends JFrame {
     }
 
     public void setPlayerNames(List<String> names) throws Exception {
-        for (String name : names) {
-            if(name != null) {
+        names.forEach(name -> {
+            if (name != null)
                 this.players.add(new Player(name));
-            }
+        });
+        if (players.size() < 2) {
+            throw (new Exception("Not enough players"));
         }
-        if(players.size() < 2) {
-            throw(new Exception("Not enough players"));
-        }
     }
 
-    public List<Player> getPlayers() {
-        return players;
+    public void mainMenu() {
+        cardLayout.show(mainPanel, "Menu");
     }
 
-    public void mainMenu(){
-        cardLayout.show(mainPanel,"Menu");
-    }
-    public void helpMenu(){
-        cardLayout.show(mainPanel,"helpMenu");
+    public void helpMenu() {
+        cardLayout.show(mainPanel, "helpMenu");
     }
 
-    public void dictionaryManager(){
+    public void dictionaryManager() {
         cardLayout.show(mainPanel, "Dictionary");
     }
 
-    public void playerSelect(){
+    public void playerSelect() {
         PlayerSelect playerSelectPanel = new PlayerSelect(this);
-     mainPanel.add(playerSelectPanel, "PlayerSelect");
-     cardLayout.show(mainPanel, "PlayerSelect");
+        mainPanel.add(playerSelectPanel, "PlayerSelect");
+        cardLayout.show(mainPanel, "PlayerSelect");
     }
 
     public void switchToGame() {
-        try{
-            AudioInputStream audioInputStream  = AudioSystem.getAudioInputStream(new File("resources/bgm.wav"));
+        try {
+            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("resources/bgm.wav"));
             bgm = AudioSystem.getClip();
             bgm.open(audioInputStream);
             bgm.start();
-        }
-        catch (UnsupportedAudioFileException | LineUnavailableException | IOException e){
+        } catch (UnsupportedAudioFileException | LineUnavailableException | IOException e) {
             System.out.println("Could not open bgm");
         }
         GameManager gameManager = new GameManager(players);
-        playingField=new PlayingField(gameManager,this);
+        PlayingField playingField = new PlayingField(gameManager, this);
         gameManager.setPlayingField(playingField);
         mainPanel.add(playingField, "Game");
         cardLayout.show(mainPanel, "Game");
     }
-    public void loadEndScreen(Player winner){
+
+    public void loadEndScreen(Player winner) {
         bgm.stop();
-        WinPanel winnerPanel = new WinPanel(this,winner);
-        mainPanel.add(winnerPanel,"Winner");
-        cardLayout.show(mainPanel,"Winner");
+        WinPanel winnerPanel = new WinPanel(this, winner);
+        mainPanel.add(winnerPanel, "Winner");
+        cardLayout.show(mainPanel, "Winner");
     }
 }

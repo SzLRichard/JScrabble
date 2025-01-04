@@ -55,7 +55,7 @@ public class TileSpace extends JPanel {
     }
 
     public boolean occupied() {
-        return tile != null;
+        return (!taken && tile != null);
     }
 
     public void setMultiplier(String multiplier) {

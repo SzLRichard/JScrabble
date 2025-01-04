@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.util.Arrays;
 
 public class GameBoard extends JPanel {
     private final TileSpace[][] tileBoard;
@@ -33,12 +34,7 @@ public class GameBoard extends JPanel {
             }
         }
         setMultipliers();
-        for (int i = 0; i < 15; i++) {
-            for (int j = 0; j < 15; j++) {
-                this.add(tileBoard[i][j]);
-            }
-        }
-
+        Arrays.stream(tileBoard).flatMap(Arrays::stream).forEach(this::add);
     }
 
     public TileSpace getTileSpace(int x, int y) {

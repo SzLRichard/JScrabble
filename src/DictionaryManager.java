@@ -19,8 +19,8 @@ public class DictionaryManager extends JPanel {
                     public void mouseClicked(MouseEvent e) {
                         for (String word : wordField.getText().toUpperCase().split(" ")) {
                             try (FileWriter writer = new FileWriter("resources/wordlist.txt", true)) {
-                                writer.write(System.lineSeparator());
                                 writer.write(word);
+                                writer.write(System.lineSeparator());
                             } catch (IOException exc) {
                                 System.err.println("An error occurred while appending to the file:" + exc.getMessage());
                             }

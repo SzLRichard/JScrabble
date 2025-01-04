@@ -20,6 +20,7 @@ public class PlayingField extends JPanel {
         List<Player> players = gameManager.getPlayers();
         this.currentPlayer=gameManager.getCurrentPlayer();
         scoreBoard = new ScorePanel(players);
+        scoreBoard.setCurrentPlayer(currentPlayer);
         handPanel = new HandPanel(players.getFirst().getTileList());
         gameBoard = new GameBoard(handPanel);
         JPanel leftSide=new JPanel(new GridLayout(3,1));
@@ -78,6 +79,7 @@ public class PlayingField extends JPanel {
         currentPlayer=gameManager.getCurrentPlayer();
         handPanel.setHand(currentPlayer.getTileList());
         handPanel.repaint();
+        scoreBoard.setCurrentPlayer(currentPlayer);
         scoreBoard.repaint();
         gameBoard.placeTiles();
         gameBoard.repaint();
