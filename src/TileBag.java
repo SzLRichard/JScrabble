@@ -31,7 +31,7 @@ public class TileBag {
     }
 
     public TileBag() {
-        tiles = new ArrayList<Tile>();
+        tiles = new ArrayList<>();
         readTiles();
     }
 

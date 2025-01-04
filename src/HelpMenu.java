@@ -1,7 +1,5 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 public class HelpMenu extends JPanel {
 
@@ -57,7 +55,7 @@ public class HelpMenu extends JPanel {
         add(scrollPane, BorderLayout.CENTER);
 
         JButton backButton = new JButton("Back");
-        backButton.addActionListener(e->app.mainMenu());
+        backButton.addActionListener(_ ->app.mainMenu());
         add(backButton,BorderLayout.SOUTH);
     }
 }

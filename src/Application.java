@@ -79,7 +79,7 @@ public class Application extends JFrame {
         catch (UnsupportedAudioFileException | LineUnavailableException | IOException e){
             System.out.println("Could not open bgm");
         }
-        GameManager gameManager = new GameManager(playingField, players);
+        GameManager gameManager = new GameManager(players);
         playingField=new PlayingField(gameManager,this);
         gameManager.setPlayingField(playingField);
         mainPanel.add(playingField, "Game");

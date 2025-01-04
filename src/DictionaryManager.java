@@ -10,7 +10,7 @@ public class DictionaryManager extends JPanel {
 
     public DictionaryManager(Application app) {
         JButton backButton = new JButton("Back");
-        backButton.addActionListener(e -> app.mainMenu());
+        backButton.addActionListener(_ -> app.mainMenu());
         add(backButton);
         wordField = new JTextField(50);
         JButton addButton = new JButton("Add words");

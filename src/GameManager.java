@@ -19,9 +19,8 @@ public class GameManager {
     private Clip placeSFX;
 
     private boolean validWords() {
-        boolean allValid = true;
-        StringBuilder word = new StringBuilder();
-        StringBuilder word2 = new StringBuilder();
+        StringBuilder word;
+        StringBuilder word2;
         for (int i = 0; i < 15; i++) {
             word = new StringBuilder();
             word2 = new StringBuilder();
@@ -60,8 +59,8 @@ public class GameManager {
     private int calculateScore() {
         int score = 0;
         StringBuilder word;
-        int wordScore = 0;
-        int wordMultiplier = 0;
+        int wordScore;
+        int wordMultiplier;
         for (int i = 0; i < 15; i++) {
             word = new StringBuilder();
             wordScore = 0;
@@ -244,7 +243,7 @@ public class GameManager {
         playingField.loadEndScreen(winner);
     }
 
-    public GameManager(PlayingField playingField, List<Player> playerList) {
+    public GameManager(List<Player> playerList) {
         this.playerList = playerList;
         this.dictionary = new Dictionary();
         tileBag = new TileBag();

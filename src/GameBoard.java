@@ -6,10 +6,6 @@ import java.io.FileReader;
 public class GameBoard extends JPanel {
     private final TileSpace[][] tileBoard;
 
-    private boolean removeTile() {
-        return false;
-    }
-
     private void setMultipliers() {
         try {
 

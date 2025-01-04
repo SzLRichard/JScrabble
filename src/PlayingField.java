@@ -13,10 +13,6 @@ public class PlayingField extends JPanel {
     private final JLabel timerLabel;
     private int timeRemaining;
 
-    private void roundEnd(){
-        gameBoard.placeTiles();
-    }
-
     public PlayingField(GameManager gm, Application app) {
         setLayout(new BorderLayout());
         this.game=app;
@@ -31,17 +27,13 @@ public class PlayingField extends JPanel {
         timerLabel=new JLabel();
         timerPanel.add(timerLabel);
         JButton swapTiles = new JButton("Swap tiles");
-        swapTiles.addActionListener(e->{
-            gameManager.setSwapMode();
-        });
+        swapTiles.addActionListener(_ -> gameManager.setSwapMode());
 
         JButton finalize = new JButton("Finalize");
-        finalize.addActionListener(e->{
-            gameManager.roundEnd();
-        });
+        finalize.addActionListener(_ -> gameManager.roundEnd());
 
         timeRemaining=startingTime;
-        Timer timer = new Timer(1000, e -> {
+        Timer timer = new Timer(1000, _ -> {
             if (timeRemaining > 0) {
                 timeRemaining--;
                 timerLabel.setText(String.format("%02d:%02d", timeRemaining / 60, timeRemaining % 60));
@@ -91,7 +83,4 @@ public class PlayingField extends JPanel {
         gameBoard.repaint();
     }
 
-    public void updateScores() {
-        scoreBoard.repaint();
-    }
 }

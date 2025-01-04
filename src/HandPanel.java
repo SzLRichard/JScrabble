@@ -44,7 +44,7 @@ public class HandPanel extends JPanel {
         button.setBackground(Color.WHITE);
         button.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
-        button.addActionListener(e->{
+        button.addActionListener(_ ->{
             if (swapMode) {
                 swappedTiles.add(tile);
                 hand.remove(tile);

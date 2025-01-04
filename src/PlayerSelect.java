@@ -25,7 +25,7 @@ class PlayerSelect extends JPanel {
         add(player4Field);
 
         JButton startButton = new JButton("Start Game");
-        startButton.addActionListener(e -> {
+        startButton.addActionListener(_ -> {
             List<String> names = new ArrayList<>();
             names.add(player1Field.getText());
             names.add(player2Field.getText());
