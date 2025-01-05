@@ -9,9 +9,9 @@ public class WinPanel extends JPanel {
         winnerDetailsPanel.setLayout(new FlowLayout());
 
         JLabel winnerNameLabel = new JLabel("Winner: " + winner.getName());
-        winnerNameLabel.setSize(40,15);
+        winnerNameLabel.setSize(40, 15);
         JLabel winnerPointsLabel = new JLabel("Points: " + winner.getScore());
-        winnerPointsLabel.setSize(40,15);
+        winnerPointsLabel.setSize(40, 15);
 
         winnerDetailsPanel.add(winnerNameLabel);
         winnerDetailsPanel.add(winnerPointsLabel);

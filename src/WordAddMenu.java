@@ -28,7 +28,7 @@ public class WordAddMenu extends JPanel {
                                 writer.write(word);
                                 writer.write(System.lineSeparator());
                             } catch (IOException exc) {
-                                System.err.println("An error occurred while appending to the file:" + exc.getMessage());
+                                System.out.println("An error occurred while appending to the file:" + exc.getMessage());
                             }
                         }
                     }

@@ -92,7 +92,7 @@ public class GameManager {
             word = new StringBuilder();
             wordScore = 0;
             wordMultiplier = 0;
-            for (int i = 0; i < 15; i++) {
+            for (int i = 0; i <= 15; i++) {
                 if (i == 15 || gameBoardPanel.getTile(i, j) == null) {
                     if (word.length() > 1) {
                         score += wordScore * wordMultiplier;
@@ -154,11 +154,8 @@ public class GameManager {
             }
         }
         if (checkIfSameRow(placedTiles)) {
-            System.out.println("Same row");
             if (isConnectedToExisting(placedTiles)) {
-                System.out.println("Connected to existing tile");
                 if (validWords()) {
-                    System.out.println("All words are valid");
                     return true;
                 } else {
                     showErrorMessage("Not a valid word");
@@ -197,9 +194,7 @@ public class GameManager {
             playerIndex = 0;
             currentPlayer = playerList.getFirst();
         }
-        System.out.println("The next player up is " + currentPlayer.getName());
         playingFieldPanel.repaint();
-        System.out.println("Repainted the playing field");
         placeSFX.start();
         playingFieldPanel.resetTimer();
     }
@@ -220,9 +215,7 @@ public class GameManager {
             currentPlayer.setTileList(currentTiles);
             loadNextRound();
         } else if (validMove()) {
-            System.out.println("The move is valid");
             int score = calculateScore();
-            System.out.println("Calculated additional score of " + score);
             currentPlayer.setScore(currentPlayer.getScore() + score);
             List<Tile> currentTiles = currentPlayer.getTileList();
             currentTiles.addAll(tileBag.replenishTiles(7 - currentPlayer.getTileList().size()));

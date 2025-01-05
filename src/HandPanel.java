@@ -76,7 +76,6 @@ public class HandPanel extends JPanel {
     }
 
     private void refreshHand() {
-        System.out.println("Refreshing hand panel");
         removeAll();
         for (Tile tile : hand) {
             add(createTileButton(tile));
