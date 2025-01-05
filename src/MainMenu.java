@@ -14,7 +14,7 @@ public class MainMenu extends JPanel {
         help.addActionListener(_ -> app.helpMenu());
         addWords.addActionListener(_ -> app.wordAddView());
         Logo logo = new Logo();
-        setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
+        setLayout(new GridLayout(5, 1));
         setPreferredSize(new Dimension(800, 600));
         this.add(logo);
         this.add(play);
