@@ -26,8 +26,8 @@ public class Application extends JFrame {
         HelpMenu helpMenu = new HelpMenu(this);
         mainPanel.add(helpMenu, "helpMenu");
 
-        DictionaryManager dictionaryManager = new DictionaryManager(this);
-        mainPanel.add(dictionaryManager, "Dictionary");
+        WordAddMenu wordAddMenu = new WordAddMenu(this);
+        mainPanel.add(wordAddMenu, "Dictionary");
 
         mainPanel.add(new MainMenu(this), "Menu");
 
@@ -37,13 +37,14 @@ public class Application extends JFrame {
         setVisible(true);
     }
 
-    public void setPlayerNames(List<String> names) throws Exception {
+    public void setPlayerNames(List<String> names) {
+        this.players.clear();
         names.forEach(name -> {
             if (name != null)
                 this.players.add(new Player(name));
         });
         if (players.size() < 2) {
-            throw (new Exception("Not enough players"));
+            playerSelect();
         }
     }
 
@@ -55,13 +56,13 @@ public class Application extends JFrame {
         cardLayout.show(mainPanel, "helpMenu");
     }
 
-    public void dictionaryManager() {
+    public void wordAddView() {
         cardLayout.show(mainPanel, "Dictionary");
     }
 
     public void playerSelect() {
-        PlayerSelect playerSelectPanel = new PlayerSelect(this);
-        mainPanel.add(playerSelectPanel, "PlayerSelect");
+        PlayerSelectMenu playerSelectMenuPanel = new PlayerSelectMenu(this);
+        mainPanel.add(playerSelectMenuPanel, "PlayerSelect");
         cardLayout.show(mainPanel, "PlayerSelect");
     }
 
@@ -70,14 +71,18 @@ public class Application extends JFrame {
             AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("resources/bgm.wav"));
             bgm = AudioSystem.getClip();
             bgm.open(audioInputStream);
+            FloatControl volumeControl = (FloatControl) bgm.getControl(FloatControl.Type.MASTER_GAIN);
+            float volume = -30.0f;
+            volumeControl.setValue(volume);
+
             bgm.start();
         } catch (UnsupportedAudioFileException | LineUnavailableException | IOException e) {
             System.out.println("Could not open bgm");
         }
         GameManager gameManager = new GameManager(players);
-        PlayingField playingField = new PlayingField(gameManager, this);
-        gameManager.setPlayingField(playingField);
-        mainPanel.add(playingField, "Game");
+        PlayingFieldPanel playingFieldPanel = new PlayingFieldPanel(gameManager, this);
+        gameManager.setPlayingField(playingFieldPanel);
+        mainPanel.add(playingFieldPanel, "Game");
         cardLayout.show(mainPanel, "Game");
     }
 

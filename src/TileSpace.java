@@ -24,9 +24,9 @@ public class TileSpace extends JPanel {
         this.repaint();
     }
 
-    public TileSpace(HandPanel hand,int x,int y) {
-        this.x=x;
-        this.y=y;
+    public TileSpace(HandPanel hand, int x, int y) {
+        this.x = x;
+        this.y = y;
         this.hand = hand;
         setPreferredSize(new Dimension(40, 40));
         setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
@@ -66,12 +66,14 @@ public class TileSpace extends JPanel {
         return multiplier;
     }
 
-    public int getXpos(){
+    public int getXpos() {
         return x;
     }
-    public int getYpos(){
+
+    public int getYpos() {
         return y;
     }
+
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -112,7 +114,7 @@ public class TileSpace extends JPanel {
                         height - 5);
             }
         } else {
-            g.setColor(new Color(139,69,19));
+            g.setColor(new Color(139, 69, 19));
             g.fillRect(0, 0, getWidth(), getHeight());
             g.setColor(Color.BLACK);
             g.drawString(Character.toString(tile.getLetter()), 10, 20);

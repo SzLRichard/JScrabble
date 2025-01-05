@@ -9,11 +9,11 @@ import java.util.Objects;
 import static java.lang.Math.max;
 
 public class GameManager {
-    private PlayingField playingField;
+    private PlayingFieldPanel playingFieldPanel;
     private final List<Player> playerList;
     private final TileBag tileBag;
     private final Dictionary dictionary;
-    private GameBoard gameBoard;
+    private GameBoardPanel gameBoardPanel;
     private Player currentPlayer;
     private int playerIndex;
     private Clip placeSFX;
@@ -27,7 +27,7 @@ public class GameManager {
             word2 = new StringBuilder();
             for (int j = 0; j < 15; j++) {
                 try {
-                    word.append(gameBoard.getTile(i, j).getLetter());
+                    word.append(gameBoardPanel.getTile(i, j).getLetter());
                 } catch (NullPointerException e) {
                     if (word.length() > 1 && !dictionary.contains(word.toString())) {
                         return false;
@@ -35,7 +35,7 @@ public class GameManager {
                     word = new StringBuilder();
                 }
                 try {
-                    word2.append(gameBoard.getTile(j, i).getLetter());
+                    word2.append(gameBoardPanel.getTile(j, i).getLetter());
                 } catch (NullPointerException e) {
                     if (word2.length() > 1 && !dictionary.contains(word2.toString())) {
                         return false;
@@ -66,21 +66,22 @@ public class GameManager {
             word = new StringBuilder();
             wordScore = 0;
             wordMultiplier = 0;
-            for (int j = 0; j < 15; j++) {
-                if (gameBoard.getTile(i, j) == null) {
-                    if(word.length()>1){
-                    score += wordScore * wordMultiplier;}
+            for (int j = 0; j <= 15; j++) {
+                if (j == 15 || gameBoardPanel.getTile(i, j) == null) {
+                    if (word.length() > 1) {
+                        score += wordScore * wordMultiplier;
+                    }
                     word = new StringBuilder();
                     wordMultiplier = 0;
                     wordScore = 0;
                 } else {
-                    word.append(gameBoard.getTile(i, j).getLetter());
-                    wordScore += tileScore(gameBoard.getTileSpace(i, j));
-                    if (!gameBoard.checkIfTaken(i, j) && gameBoard.getTile(i, j) != null) {
+                    word.append(gameBoardPanel.getTile(i, j).getLetter());
+                    wordScore += tileScore(gameBoardPanel.getTileSpace(i, j));
+                    if (!gameBoardPanel.checkIfTaken(i, j) && gameBoardPanel.getTile(i, j) != null) {
                         wordMultiplier = max(1, wordMultiplier);
-                        if (Objects.equals(gameBoard.getTileSpace(i, j).getMultiplier(), "DW"))
+                        if (Objects.equals(gameBoardPanel.getTileSpace(i, j).getMultiplier(), "DW"))
                             wordMultiplier = 2;
-                        if (Objects.equals(gameBoard.getTileSpace(i, j).getMultiplier(), "TW"))
+                        if (Objects.equals(gameBoardPanel.getTileSpace(i, j).getMultiplier(), "TW"))
                             wordMultiplier = 3;
 
                     }
@@ -91,22 +92,22 @@ public class GameManager {
             word = new StringBuilder();
             wordScore = 0;
             wordMultiplier = 0;
-            for (int i = 0; i< 15; i++) {
-                if (gameBoard.getTile(i, j) == null) {
-                    if(word.length()>1){
-                    score += wordScore * wordMultiplier;
+            for (int i = 0; i < 15; i++) {
+                if (i == 15 || gameBoardPanel.getTile(i, j) == null) {
+                    if (word.length() > 1) {
+                        score += wordScore * wordMultiplier;
                     }
                     word = new StringBuilder();
                     wordMultiplier = 0;
                     wordScore = 0;
                 } else {
-                    word.append(gameBoard.getTile(i, j).getLetter());
-                    wordScore += tileScore(gameBoard.getTileSpace(i, j));
-                    if (!gameBoard.checkIfTaken(i, j) && gameBoard.getTile(i, j) != null) {
+                    word.append(gameBoardPanel.getTile(i, j).getLetter());
+                    wordScore += tileScore(gameBoardPanel.getTileSpace(i, j));
+                    if (!gameBoardPanel.checkIfTaken(i, j) && gameBoardPanel.getTile(i, j) != null) {
                         wordMultiplier = max(1, wordMultiplier);
-                        if (Objects.equals(gameBoard.getTileSpace(i, j).getMultiplier(), "DW"))
+                        if (Objects.equals(gameBoardPanel.getTileSpace(i, j).getMultiplier(), "DW"))
                             wordMultiplier = 2;
-                        if (Objects.equals(gameBoard.getTileSpace(i, j).getMultiplier(), "TW"))
+                        if (Objects.equals(gameBoardPanel.getTileSpace(i, j).getMultiplier(), "TW"))
                             wordMultiplier = 3;
 
                     }
@@ -116,15 +117,15 @@ public class GameManager {
         return score;
     }
 
-    boolean isConnectedToExisting(List<TileSpace> tiles) {
-        if (!gameBoard.checkIfTaken(7, 7) && gameBoard.getTile(7, 7) != null)
+    private boolean isConnectedToExisting(List<TileSpace> tiles) {
+        if (gameBoardPanel.getTileSpace(7, 7).occupied())
             return true;
         for (TileSpace tile : tiles) {
             int x = tile.getXpos(), y = tile.getYpos();
-            if ((x > 0 && gameBoard.checkIfTaken(x - 1, y)) ||
-                    (x < 14 && gameBoard.checkIfTaken(x + 1, y)) ||
-                    (y > 0 && gameBoard.checkIfTaken(x, y - 1)) ||
-                    (y < 14 && gameBoard.checkIfTaken(x, y + 1))) {
+            if ((x > 0 && gameBoardPanel.checkIfTaken(x - 1, y)) ||
+                    (x < 14 && gameBoardPanel.checkIfTaken(x + 1, y)) ||
+                    (y > 0 && gameBoardPanel.checkIfTaken(x, y - 1)) ||
+                    (y < 14 && gameBoardPanel.checkIfTaken(x, y + 1))) {
                 return true;
             }
         }
@@ -138,16 +139,16 @@ public class GameManager {
     }
 
     private void showErrorMessage(String message) {
-        JOptionPane.showMessageDialog(playingField, message, message, JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(playingFieldPanel, message, message, JOptionPane.ERROR_MESSAGE);
     }
 
-    public boolean validMove() {
+    private boolean validMove() {
         List<TileSpace> placedTiles = new ArrayList<>();
         for (int i = 0; i < 15; i++) {
             for (int j = 0; j < 15; j++) {
-                if (!gameBoard.checkIfTaken(i, j)) {
-                    if (gameBoard.getTile(i, j) != null) {
-                        placedTiles.add(gameBoard.getTileSpace(i, j));
+                if (!gameBoardPanel.checkIfTaken(i, j)) {
+                    if (gameBoardPanel.getTile(i, j) != null) {
+                        placedTiles.add(gameBoardPanel.getTileSpace(i, j));
                     }
                 }
             }
@@ -171,8 +172,18 @@ public class GameManager {
         return false;
     }
 
-    public void loadNextRound(){
-        if(emptyBagRounds==4){
+    private void gameEnd() {
+        Player winner = playerList.getFirst();
+        for (Player p : playerList) {
+            if (p.getScore() > winner.getScore()) {
+                winner = p;
+            }
+        }
+        playingFieldPanel.loadEndScreen(winner);
+    }
+
+    private void loadNextRound() {
+        if (emptyBagRounds == 4) {
             gameEnd();
             return;
         }
@@ -187,30 +198,28 @@ public class GameManager {
             currentPlayer = playerList.getFirst();
         }
         System.out.println("The next player up is " + currentPlayer.getName());
-        playingField.repaint();
+        playingFieldPanel.repaint();
         System.out.println("Repainted the playing field");
         placeSFX.start();
-        playingField.resetTimer();
+        playingFieldPanel.resetTimer();
     }
 
     public void roundEnd() {
 
-        if(playingField.getHandPanel().checkIfSwap()){
+        if (playingFieldPanel.getHandPanel().checkIfSwap()) {
             List<Tile> currentTiles = currentPlayer.getTileList();
-            List<Tile> swappedTiles=playingField.getHandPanel().getSwappedTiles();
-            if(tileBag.getSize()<swappedTiles.size()){
+            List<Tile> swappedTiles = playingFieldPanel.getHandPanel().getSwappedTiles();
+            if (tileBag.getSize() < swappedTiles.size()) {
                 showErrorMessage("Insufficient tiles remaining");
                 return;
             }
-            List<Tile> newTiles=tileBag.swapTiles(swappedTiles);
+            List<Tile> newTiles = tileBag.swapTiles(swappedTiles);
             currentTiles.addAll(newTiles);
-            playingField.getHandPanel().clearSwappedTiles();
-            playingField.getHandPanel().setSwapMode(false);
+            playingFieldPanel.getHandPanel().clearSwappedTiles();
+            playingFieldPanel.getHandPanel().setSwapMode(false);
             currentPlayer.setTileList(currentTiles);
             loadNextRound();
-        }
-        else
-        if (validMove()) {
+        } else if (validMove()) {
             System.out.println("The move is valid");
             int score = calculateScore();
             System.out.println("Calculated additional score of " + score);
@@ -218,37 +227,28 @@ public class GameManager {
             List<Tile> currentTiles = currentPlayer.getTileList();
             currentTiles.addAll(tileBag.replenishTiles(7 - currentPlayer.getTileList().size()));
             currentPlayer.setTileList(currentTiles);
+            gameBoardPanel.placeTiles();
             loadNextRound();
         }
     }
 
-    public void forceRoundEnd(){
-        for(int i=0;i<15;i++){
-            for(int j=0;j<15;j++){
-                if(!gameBoard.checkIfTaken(i, j) && gameBoard.getTile(i, j) != null){
-                    Tile removedTile=gameBoard.getTile(i,j);
-                    gameBoard.getTileSpace(i,j).setTile(null);
-                    gameBoard.getTileSpace(i,j).repaint();
-                    playingField.getHandPanel().addTile(removedTile);
-                    playingField.getHandPanel().repaint();
+    public void forceRoundEnd() {
+        for (int i = 0; i < 15; i++) {
+            for (int j = 0; j < 15; j++) {
+                if (!gameBoardPanel.checkIfTaken(i, j) && gameBoardPanel.getTile(i, j) != null) {
+                    Tile removedTile = gameBoardPanel.getTile(i, j);
+                    gameBoardPanel.getTileSpace(i, j).setTile(null);
+                    gameBoardPanel.getTileSpace(i, j).repaint();
+                    playingFieldPanel.getHandPanel().addTile(removedTile);
+                    playingFieldPanel.getHandPanel().repaint();
                 }
             }
         }
         loadNextRound();
     }
 
-    private void gameEnd() {
-        Player winner = playerList.getFirst();
-        for (Player p : playerList) {
-            if (p.getScore() > winner.getScore()) {
-                winner = p;
-            }
-        }
-        playingField.loadEndScreen(winner);
-    }
-
     public GameManager(List<Player> playerList) {
-        emptyBagRounds=0;
+        emptyBagRounds = 0;
         this.playerList = playerList;
         this.dictionary = new Dictionary();
         tileBag = new TileBag();
@@ -266,9 +266,9 @@ public class GameManager {
         }
     }
 
-    public void setPlayingField(PlayingField pf) {
-        this.playingField = pf;
-        this.gameBoard = this.playingField.getGameBoard();
+    public void setPlayingField(PlayingFieldPanel pf) {
+        this.playingFieldPanel = pf;
+        this.gameBoardPanel = this.playingFieldPanel.getGameBoard();
     }
 
     public Player getCurrentPlayer() {
@@ -279,16 +279,16 @@ public class GameManager {
         return playerList;
     }
 
-    public void setSwapMode(){
-        for(int i=0;i<15;i++){
-            for(int j=0;j<15;j++){
-                if(!gameBoard.checkIfTaken(i,j) && gameBoard.getTile(i,j)!=null) {
+    public void setSwapMode() {
+        for (int i = 0; i < 15; i++) {
+            for (int j = 0; j < 15; j++) {
+                if (!gameBoardPanel.checkIfTaken(i, j) && gameBoardPanel.getTile(i, j) != null) {
                     showErrorMessage("You can't swap if you've placed tiles");
                     return;
                 }
             }
         }
-        playingField.getHandPanel().setSwapMode(true);
+        playingFieldPanel.getHandPanel().setSwapMode(true);
     }
 
 }

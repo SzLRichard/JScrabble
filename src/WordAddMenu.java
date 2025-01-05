@@ -1,17 +1,23 @@
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.FileWriter;
 import java.io.IOException;
 
-public class DictionaryManager extends JPanel {
+public class WordAddMenu extends JPanel {
 
     private final JTextField wordField;
 
-    public DictionaryManager(Application app) {
+    public WordAddMenu(Application app) {
+        setLayout(new BorderLayout());
+        JLabel title = new JLabel("Write words to add to the dictionary");
+        title.setHorizontalAlignment(SwingConstants.CENTER);
+        add(title, BorderLayout.NORTH);
+        JPanel rest = new JPanel(new FlowLayout());
         JButton backButton = new JButton("Back");
         backButton.addActionListener(_ -> app.mainMenu());
-        add(backButton);
+        rest.add(backButton);
         wordField = new JTextField(50);
         JButton addButton = new JButton("Add words");
         addButton.addMouseListener(
@@ -28,7 +34,8 @@ public class DictionaryManager extends JPanel {
                     }
                 }
         );
-        add(wordField);
-        add(addButton);
+        rest.add(wordField);
+        rest.add(addButton);
+        add(rest, BorderLayout.CENTER);
     }
 }

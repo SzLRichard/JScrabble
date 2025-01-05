@@ -7,16 +7,18 @@ import java.util.Random;
 
 public class WinBanner extends JPanel {
     private Image img;
+
     public WinBanner() {
         try {
             Random rng = new Random();
-            String path = "resources/win" + (1+rng.nextInt(2)) + ".jpeg";
+            String path = "resources/win" + (1 + rng.nextInt(2)) + ".jpeg";
             img = ImageIO.read(new File(path));
         } catch (IOException e) {
             System.out.println("Could not read win image");
             img = null;
         }
     }
+
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);

@@ -1,24 +1,28 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 public class WinPanel extends JPanel {
-    public WinPanel(Application app,Player winner) {
+    public WinPanel(Application app, Player winner) {
         setLayout(new BorderLayout());
-        WinBanner banner=new WinBanner();
-        JLabel winnerName=new JLabel(winner.getName());
-        JLabel winnerPoints=new JLabel(String.valueOf(winner.getScore()));
-        add(winnerName, BorderLayout.NORTH);
-        add(winnerPoints, BorderLayout.SOUTH);
+
+        JPanel winnerDetailsPanel = new JPanel();
+        winnerDetailsPanel.setLayout(new FlowLayout());
+
+        JLabel winnerNameLabel = new JLabel("Winner: " + winner.getName());
+        winnerNameLabel.setSize(40,15);
+        JLabel winnerPointsLabel = new JLabel("Points: " + winner.getScore());
+        winnerPointsLabel.setSize(40,15);
+
+        winnerDetailsPanel.add(winnerNameLabel);
+        winnerDetailsPanel.add(winnerPointsLabel);
+
+        WinBanner banner = new WinBanner();
+
+        JButton backButton = new JButton("Back");
+        backButton.addActionListener(_ -> app.mainMenu());
+
         add(banner, BorderLayout.CENTER);
-        JButton backButton = new JButton("Back to menu");
-        backButton.addMouseListener(
-                new MouseAdapter() {
-                    public void mouseClicked(MouseEvent e) {
-                        app.mainMenu();
-                    }
-                }
-        );
+        add(winnerDetailsPanel, BorderLayout.NORTH);
+        add(backButton, BorderLayout.SOUTH);
     }
 }

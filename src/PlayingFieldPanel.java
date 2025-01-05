@@ -2,30 +2,30 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.List;
 
-public class PlayingField extends JPanel {
+public class PlayingFieldPanel extends JPanel {
     private final GameManager gameManager;
-    private final GameBoard gameBoard;
+    private final GameBoardPanel gameBoardPanel;
     private final ScorePanel scoreBoard;
     private final HandPanel handPanel;
     private Player currentPlayer;
     private final Application game;
-    private final int startingTime=5*60;
+    private final int startingTime = 5 * 60;
     private final JLabel timerLabel;
     private int timeRemaining;
 
-    public PlayingField(GameManager gm, Application app) {
+    public PlayingFieldPanel(GameManager gm, Application app) {
         setLayout(new BorderLayout());
-        this.game=app;
-        this.gameManager=gm;
+        this.game = app;
+        this.gameManager = gm;
         List<Player> players = gameManager.getPlayers();
-        this.currentPlayer=gameManager.getCurrentPlayer();
+        this.currentPlayer = gameManager.getCurrentPlayer();
         scoreBoard = new ScorePanel(players);
         scoreBoard.setCurrentPlayer(currentPlayer);
         handPanel = new HandPanel(players.getFirst().getTileList());
-        gameBoard = new GameBoard(handPanel);
-        JPanel leftSide=new JPanel(new GridLayout(3,1));
-        JPanel timerPanel=new JPanel(new FlowLayout());
-        timerLabel=new JLabel();
+        gameBoardPanel = new GameBoardPanel(handPanel);
+        JPanel leftSide = new JPanel(new GridLayout(3, 1));
+        JPanel timerPanel = new JPanel(new FlowLayout());
+        timerLabel = new JLabel();
         timerPanel.add(timerLabel);
         JButton swapTiles = new JButton("Swap tiles");
         swapTiles.addActionListener(_ -> gameManager.setSwapMode());
@@ -33,7 +33,7 @@ public class PlayingField extends JPanel {
         JButton finalize = new JButton("Finalize");
         finalize.addActionListener(_ -> gameManager.roundEnd());
 
-        timeRemaining=startingTime;
+        timeRemaining = startingTime;
         Timer timer = new Timer(1000, _ -> {
             if (timeRemaining > 0) {
                 timeRemaining--;
@@ -49,40 +49,39 @@ public class PlayingField extends JPanel {
         leftSide.add(swapTiles);
         leftSide.add(finalize);
 
-        this.add(gameBoard, BorderLayout.CENTER);
+        this.add(gameBoardPanel, BorderLayout.CENTER);
         this.add(scoreBoard, BorderLayout.EAST);
-        this.add(leftSide,BorderLayout.WEST);
+        this.add(leftSide, BorderLayout.WEST);
         this.add(handPanel, BorderLayout.SOUTH);
         setVisible(true);
         timer.start();
     }
 
-    public void resetTimer(){
-        timeRemaining=startingTime;
+    public void resetTimer() {
+        timeRemaining = startingTime;
     }
 
-    public GameBoard getGameBoard() {
-        return gameBoard;
+    public GameBoardPanel getGameBoard() {
+        return gameBoardPanel;
     }
 
-    public HandPanel getHandPanel(){
+    public HandPanel getHandPanel() {
         return handPanel;
     }
 
-    public void loadEndScreen(Player winner){
+    public void loadEndScreen(Player winner) {
         game.loadEndScreen(winner);
     }
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        currentPlayer=gameManager.getCurrentPlayer();
+        currentPlayer = gameManager.getCurrentPlayer();
         handPanel.setHand(currentPlayer.getTileList());
         handPanel.repaint();
         scoreBoard.setCurrentPlayer(currentPlayer);
         scoreBoard.repaint();
-        gameBoard.placeTiles();
-        gameBoard.repaint();
+        gameBoardPanel.repaint();
     }
 
 }

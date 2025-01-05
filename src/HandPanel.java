@@ -43,8 +43,7 @@ public class HandPanel extends JPanel {
         button.setFont(new Font("Arial", Font.BOLD, 20));
         button.setBackground(Color.WHITE);
         button.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-
-        button.addActionListener(_ ->{
+        button.addActionListener(_ -> {
             if (swapMode) {
                 swappedTiles.add(tile);
                 hand.remove(tile);
@@ -60,9 +59,7 @@ public class HandPanel extends JPanel {
             }
         });
 
-        if (tile == selectedTile) {
-            button.setBackground(Color.YELLOW);
-        }
+
         return button;
     }
 

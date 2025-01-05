@@ -35,25 +35,24 @@ public class TileBag {
         readTiles();
     }
 
-    public List<Tile> replenishTiles(int n){
-        List<Tile> newTiles=new ArrayList<>();
+    public List<Tile> replenishTiles(int n) {
+        List<Tile> newTiles = new ArrayList<>();
         Random random = new Random();
         Tile pulledTile;
-        for(int i=0;i<min(n,tiles.size());i++){
-            pulledTile=tiles.get(random.nextInt(tiles.size()));
+        for (int i = 0; i < min(n, tiles.size()); i++) {
+            pulledTile = tiles.get(random.nextInt(tiles.size()));
             tiles.remove(pulledTile);
             newTiles.add(pulledTile);
         }
         return newTiles;
     }
 
-    public List<Tile> swapTiles(List<Tile> toSwap){
-        int n=toSwap.size();
-        if(n>tiles.size()){
+    public List<Tile> swapTiles(List<Tile> toSwap) {
+        int n = toSwap.size();
+        if (n > tiles.size()) {
             System.out.println("Not enough tiles in the bag");
             return toSwap;
-        }
-        else {
+        } else {
             List<Tile> newTiles = replenishTiles(n);
             for (int i = 0; i < n; i++) {
                 tiles.add(toSwap.get(i));
@@ -61,7 +60,8 @@ public class TileBag {
             return newTiles;
         }
     }
-    public int getSize(){
+
+    public int getSize() {
         return tiles.size();
     }
 }

@@ -3,13 +3,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.awt.*;
 
-class PlayerSelect extends JPanel {
+class PlayerSelectMenu extends JPanel {
     private final JTextField player1Field;
     private final JTextField player2Field;
     private final JTextField player3Field;
     private final JTextField player4Field;
 
-    public PlayerSelect(Application game) {
+    public PlayerSelectMenu(Application game) {
         setLayout(new GridLayout(6, 1, 10, 10));
 
         add(new JLabel("Enter Player Names:", SwingConstants.CENTER));
@@ -27,19 +27,19 @@ class PlayerSelect extends JPanel {
         JButton startButton = new JButton("Start Game");
         startButton.addActionListener(_ -> {
             List<String> names = new ArrayList<>();
-            names.add(player1Field.getText());
-            names.add(player2Field.getText());
+            if (!player3Field.getText().isEmpty()) {
+                names.add(player1Field.getText());
+            }
+            if (!player2Field.getText().isEmpty()) {
+                names.add(player2Field.getText());
+            }
             if (!player3Field.getText().isEmpty()) {
                 names.add(player3Field.getText());
             }
             if (!player4Field.getText().isEmpty()) {
                 names.add(player4Field.getText());
             }
-            try {
-                game.setPlayerNames(names);
-            } catch (Exception ex) {
-                throw new RuntimeException(ex);
-            }
+            game.setPlayerNames(names);
             game.switchToGame();
         });
 

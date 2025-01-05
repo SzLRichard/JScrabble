@@ -6,10 +6,12 @@ import java.util.Set;
 
 public class Dictionary {
     private final Set<String> dictionary;
+
     public Dictionary() {
         dictionary = new HashSet<>();
         readWords();
     }
+
     public boolean contains(String word) {
         return dictionary.contains(word);
     }

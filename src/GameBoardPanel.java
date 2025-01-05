@@ -4,7 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.Arrays;
 
-public class GameBoard extends JPanel {
+public class GameBoardPanel extends JPanel {
     private final TileSpace[][] tileBoard;
 
     private void setMultipliers() {
@@ -25,7 +25,7 @@ public class GameBoard extends JPanel {
 
     }
 
-    public GameBoard(HandPanel handPanel) {
+    public GameBoardPanel(HandPanel handPanel) {
         tileBoard = new TileSpace[15][15];
         setLayout(new GridLayout(15, 15));
         for (int i = 0; i < 15; i++) {
